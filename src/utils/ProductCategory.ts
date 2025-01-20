@@ -1,0 +1,16 @@
+export const ProductCategories = [
+  'Starter',
+  'Rice',
+  'Sauce',
+  'Soup',
+  'Stew',
+  'Pasta',
+  'Grill',
+  'Desert',
+  'Snack',
+  'Mocktail',
+  'Breakfast',
+  'Porridge',
+  'Sallad',
+  'Sides',
+];

@@ -1,0 +1,14 @@
+/* app global css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ r
+::-webkit-scrollbar{
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #9C27B0;
+}
