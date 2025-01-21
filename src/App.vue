@@ -10,7 +10,7 @@ defineOptions({
   name: 'App'
 });
 
-const backend_url = process.env.DEV ? 'http://localhost:3000/api': 'https://sales-admin-server.financial-growths.com/api'
+const backend_url = process.env.DEV ? 'http://localhost:3000/api': 'https://steeze-pot.netlify.app/api'
 provide('api', backend_url)
 
 

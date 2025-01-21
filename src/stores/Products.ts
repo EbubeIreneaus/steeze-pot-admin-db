@@ -29,33 +29,21 @@ export const useProductStore = defineStore('product', () => {
     for (const new_pro of new_products) {
       product.value.unshift({
         ...new_pro,
-        image: null,
       });
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function update(new_products: any) {
-    const { name, unit_price, market_price, quantity, id, store, long_title, category, sub_category, desc } = new_products;
-    const prod = product.value.find((pr) => pr.id == id) ?? ({} as Product);
-    prod.name = name;
-    prod.unit_price = unit_price;
-    prod.quantity = quantity;
-    prod.category = category
-    prod.market_price = market_price
-    prod.desc = desc
-    prod.sub_category = sub_category
-    prod.long_title = long_title
-    prod.store = store
+  function update(updated_product: any) {
+    const {id } = updated_product;
+    const prod = product.value.findIndex((pr) => pr.id == id) ?? ({} as Product);
+   product.value[prod] = {...updated_product};
     return;
   }
 
-  function del(id: number) {
-    for (let index = 0; index < product.value.length; index++) {
-      if (product.value[index].id === id) {
-        product.value.splice(index, 1);
-      }
-    }
+  function del(productId: number) {
+    const index = product.value.findIndex((pr) => pr.id === productId);
+    product.value.splice(index, 1);
   }
 
   function find(productId: number) {

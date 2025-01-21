@@ -16,7 +16,7 @@ const cropper = ref();
 const api = inject('api');
 const $q = useQuasar();
 const isLoading = ref(false);
-const { updateImg } = useProductStore();
+const ProductStore = useProductStore();
 const alt = ref('')
 
 watch(
@@ -62,6 +62,7 @@ async function cropImage() {
 
     if (res.statusCode === 201) {
       NotifySuccess('Image updated successfully 😎');
+      ProductStore.updateImg(res.data.productId, res.data.filename)
       return emit('close');
     }
 

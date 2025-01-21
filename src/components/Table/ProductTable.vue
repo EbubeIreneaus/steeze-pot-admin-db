@@ -110,6 +110,7 @@ function deleteProduct(id: number) {
       .then((data) => {
         if (data.statusCode === 200) {
           NotifySuccess('Product deleted sucessfully');
+          return ProductStore.del(data.productId)
         } else {
           NotifyError(data.message);
         }

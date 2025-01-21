@@ -6,9 +6,8 @@ import { inject, onMounted, ref } from 'vue';
 import { ProductCategories } from 'src/utils/ProductCategory';
 import { NotifyError, NotifySuccess } from 'src/utils/notify';
 
-
 const emit = defineEmits(['close']);
-
+const ProductStore = useProductStore();
 const is_processing = ref(false);
 const $q = useQuasar();
 const api = inject('api');
@@ -18,7 +17,7 @@ const productFormProps = {
   price: null as unknown as number,
   category: '',
   desc: '',
-  available: false
+  available: false,
 };
 const form = ref<(typeof productFormProps)[]>([{ ...productFormProps }]);
 
@@ -46,15 +45,15 @@ async function recordProducts() {
     ).json();
 
     if (res.statusCode === 201) {
-      NotifySuccess('Product uploaded successfully')
-      return emit('close')
+      NotifySuccess('Product uploaded successfully');
+      ProductStore.add(res.data);
+      return emit('close');
     }
 
-    NotifyError(res.messgae)
-    console.log(res)
-
+    NotifyError(res.messgae);
+    console.log(res);
   } catch (error: any) {
-    NotifyError(error.messgae)
+    NotifyError(error.messgae);
   } finally {
     is_processing.value = false;
   }
@@ -133,7 +132,7 @@ onMounted(() => {
                       filled
                       :options="ProductCategories"
                     />
-                   
+
                     <q-input
                       v-model="form[index].desc"
                       label="desc"

@@ -13,7 +13,8 @@ const show = ref(true);
 const $q = useQuasar();
 const api = inject('api');
 
-let product = useProductStore().find(props.productId);
+const ProductStore = useProductStore()
+let product = ProductStore.find(props.productId);
 
 const form = reactive({
   name: product.name,
@@ -42,6 +43,7 @@ async function recordProducts() {
 
     if (res.statusCode === 200) {
       NotifySuccess('Product details updated 🤩');
+      ProductStore.update(res.data);
       return emit('close');
     }
 
