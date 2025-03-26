@@ -190,15 +190,15 @@ async function saveImage() {
           class="tw-col-span-2"
         />
         <q-input
-          v-model="user.username"
-          label="Username"
+          v-model="user.phone"
+          label="Phone"
           standout
           input-class=""
           readonly
         />
 
         <q-input
-          :model-value="new Date(user.joined).toDateString()"
+          :model-value="new Date(user.createdAt).toDateString()"
           label="Date Joined"
           standout
           input-class=""

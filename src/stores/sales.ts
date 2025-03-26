@@ -3,18 +3,21 @@ import { defineStore } from 'pinia';
 import { inject, ref } from 'vue';
 // import { SessionStorage } from 'quasar';
 import type { SalesType } from 'src/types/SalesTypes';
+import { Cookies } from 'quasar';
 
 export const usesalesStore = defineStore('sales', () => {
   const api = inject('api');
   const sales = ref<SalesType[]>([]);
 
   function initialize() {
-    fetch(`${api}/sales/all`, {
-      method: 'get',
+    fetch(`${api}/admin/sales/all`, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('adminAuthKey')}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status) {
+        if (data.statusCode == 200) {
           return (sales.value = data.data);
         }
       })
@@ -25,7 +28,6 @@ export const usesalesStore = defineStore('sales', () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function add(sale: SalesType) {
-
     sales.value.unshift(sale);
   }
 

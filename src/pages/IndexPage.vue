@@ -3,9 +3,8 @@
     <div class="tw-grid tw-grid-cols-12 tw-gap-5">
       <congrat-card class=" md:tw-col-span-4 tw-col-span-12" />
       <statistic-card class="md:tw-col-span-8 tw-col-span-12" />
-      <overview-chart class="md:tw-col-span-7 tw-col-span-12" />
       <!-- <total-earnings class="md:tw-col-span-3 tw-col-span-12" /> -->
-      <mini-cards class="md:tw-col-span-5 tw-col-span-12" />
+      <mini-cards class="tw-col-span-12" />
       <!-- <sales-list class="tw-col-span-12" page="home" /> -->
       <product-table class="tw-col-span-12" page="home" />
 

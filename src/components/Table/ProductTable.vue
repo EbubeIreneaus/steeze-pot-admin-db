@@ -183,7 +183,7 @@ onMounted(() => {
                 <q-img
                   width="64px"
                   fit="cover"
-                  :src="`http://localhost:3000/img/products/${props.row.image}`"
+                  :src="props.row.image"
                   class="tw-rounded-md tw-w-16 tw-h-16 !tw-object-cover !tw-object-center"
                   v-if="props.row.image"
                 />

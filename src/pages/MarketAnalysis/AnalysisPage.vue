@@ -25,14 +25,14 @@ function hideRecordExpenseDialog() {
 <template>
   <q-page>
     <div>
-      <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-3">
+      <!-- <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-3">
         <overview-chart class="lg:tw-col-span-2" />
         <mini-cards class="lg:tw-col-span-1" />
-      </div>
+      </div> -->
       <div class="tw-my-3">
-        <q-btn label="Record Sales" color="green-13" @click="() => showRecordSalesDialog = true" />
+        <!-- <q-btn label="Record Sales" color="green-13" @click="() => showRecordSalesDialog = true" />
         &nbsp;
-        <q-btn label="Record Expense" color="red-13" @click="()=> showRecordExpenseDialog = true" />
+        <q-btn label="Record Expense" color="red-13" @click="()=> showRecordExpenseDialog = true" /> -->
       </div>
       <SalesList page="analysis" />
     </div>

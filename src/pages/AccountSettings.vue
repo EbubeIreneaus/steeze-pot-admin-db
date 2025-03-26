@@ -13,7 +13,7 @@ const user = ref(null);
 (async function () {
   try {
     const res = await (
-      await fetch(`${api}/auth/`, {
+      await fetch(`${api}/admin/user/me`, {
         method: 'get',
         headers: {
           Authorization : `Bearer ${$q.cookies.get('adminAuthKey')}`,
@@ -21,7 +21,7 @@ const user = ref(null);
       })
     ).json();
 
-    if (res.status) {
+    if (res.statusCode === 200) {
       return (user.value = res.data);
     }
     return useRouter().push('/auth/');

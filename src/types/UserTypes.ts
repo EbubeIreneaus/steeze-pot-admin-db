@@ -3,11 +3,8 @@ export type Person = {
   firstname: string,
   lastname: string,
   email: string,
-  staff: boolean,
-  department: string,
-  username: string,
   profile_pics: string | null,
-  joined: Date | string,
+  createdAt: Date | string,
   admin: boolean,
-  active: boolean
+  phone: string
 }

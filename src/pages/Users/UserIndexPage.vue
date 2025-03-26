@@ -1,8 +1,9 @@
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script lang="ts" setup>
-import {  defineAsyncComponent, inject, onMounted, ref } from 'vue';
-import { useQuasar } from 'quasar';
+import { defineAsyncComponent, inject, onMounted, ref } from 'vue';
+import { date, useQuasar } from 'quasar';
 import { Person } from 'src/types/UserTypes';
+import { Cookies } from 'quasar';
 const NewUserDialog = defineAsyncComponent(
   () => import('src/components/Dialog/NewUserDialog.vue')
 );
@@ -18,27 +19,26 @@ const $q = useQuasar();
 let authKey = $q.cookies.get('adminAuthKey');
 const users = ref<UsersType[]>([]);
 const me = ref<UsersType>(null as unknown as UsersType);
-const isGettingUser = ref(true)
+const isGettingUser = ref(true);
 
 function getAllUser() {
-  fetch(`${api}/users/all`, {
-    method: 'get',
+  fetch(`${api}/admin/user/all`, {
     headers: {
-      Authorization: `Bearer ${authKey}`,
+      Authorization: `Bearer ${Cookies.get('adminAuthKey')}`,
     },
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.status) {
-        users.value = data.users;
+      if (data.statusCode === 200) {
+        users.value = data.data;
         me.value = data.me;
       }
     })
     .catch((err) => {
       console.log(err.message);
-    }).finally(() => isGettingUser.value = false);
+    })
+    .finally(() => (isGettingUser.value = false));
 }
-
 
 function makeAdmin(event: any, userId: string) {
   fetch(`${api}/auth/makeAdmin`, {
@@ -58,7 +58,7 @@ function makeAdmin(event: any, userId: string) {
           icon: 'check_circle',
           color: 'green-10',
           textColor: 'white',
-          iconColor: 'white'
+          iconColor: 'white',
         });
         return getAllUser();
       }
@@ -67,7 +67,7 @@ function makeAdmin(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     })
     .catch((err) => {
@@ -76,11 +76,10 @@ function makeAdmin(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     });
 }
-
 
 function removeAdmin(event: any, userId: string) {
   event.target.disabled = true;
@@ -102,7 +101,7 @@ function removeAdmin(event: any, userId: string) {
           icon: 'check_circle',
           color: 'green-10',
           textColor: 'white',
-          iconColor: 'white'
+          iconColor: 'white',
         });
         return getAllUser();
       }
@@ -111,10 +110,9 @@ function removeAdmin(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
+      });
     })
-
-  })
     .catch((err) => {
       event.target.disabled = false;
       $q.notify({
@@ -122,11 +120,10 @@ function removeAdmin(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     });
 }
-
 
 function deactivateUser(event: any, userId: string) {
   event.target.disabled = true;
@@ -148,7 +145,7 @@ function deactivateUser(event: any, userId: string) {
           icon: 'check_circle',
           color: 'green-10',
           textColor: 'white',
-          iconColor: 'white'
+          iconColor: 'white',
         });
         return getAllUser();
       }
@@ -157,7 +154,7 @@ function deactivateUser(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     })
     .catch((err) => {
@@ -167,7 +164,7 @@ function deactivateUser(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     });
 }
@@ -192,7 +189,7 @@ function activateUser(event: any, userId: string) {
           icon: 'check_circle',
           color: 'green-10',
           textColor: 'white',
-          iconColor: 'white'
+          iconColor: 'white',
         });
         return getAllUser();
       }
@@ -201,7 +198,7 @@ function activateUser(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     })
     .catch((err) => {
@@ -211,7 +208,7 @@ function activateUser(event: any, userId: string) {
         icon: 'cancel',
         color: 'red-3',
         textColor: 'red-14',
-        iconColor: 'red-14'
+        iconColor: 'red-14',
       });
     });
 }
@@ -222,13 +219,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="tw-min-h-dvh ">
+  <div class="tw-min-h-dvh">
     <div class="tw-px-3">
-
       <div v-if="isGettingUser">
         <div class="tw-border tw-grid tw-place-content-center tw-h-dvh">
           <div>
-            <q-icon name="hourglass_bottom" size="xl" class="tw-animate-spin" color="accent" />
+            <q-icon
+              name="hourglass_bottom"
+              size="xl"
+              class="tw-animate-spin"
+              color="accent"
+            />
           </div>
         </div>
       </div>
@@ -239,7 +240,6 @@ onMounted(() => {
       >
         <div
           class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-overflow-hidden tw-border tw-border-gray-200"
-          
         >
           <!-- Profile Picture -->
           <div
@@ -264,21 +264,13 @@ onMounted(() => {
               {{ me?.firstname }} {{ me?.lastname }}
             </h2>
             <p class="tw-text-sm tw-text-gray-600">{{ me?.email }}</p>
-            <p class="tw-text-sm tw-text-gray-600">
-              {{ me?.username }} - {{ me?.staff ? 'staff' : 'client' }}
-            </p>
 
             <div class="tw-mt-2">
-              <span
-                class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full"
-                :class="
-                  me?.active
-                    ? 'tw-bg-green-100 tw-text-green-600'
-                    : 'tw-bg-red-100 tw-text-red-600'
-                "
+              <div
+                class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full tw-text-slate-700"
               >
-                {{ me?.active ? 'Active' : 'Inactive' }}
-              </span>
+                {{ date.formatDate(me?.createdAt, 'MMM DD, YYYY') }}
+              </div>
               <span
                 class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full"
                 :class="
@@ -296,7 +288,7 @@ onMounted(() => {
         <div
           class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-overflow-hidden tw-border tw-border-gray-200"
           v-for="user in users"
-          :key="user.username"
+          :key="user.email"
         >
           <!-- Profile Picture -->
           <div
@@ -321,21 +313,13 @@ onMounted(() => {
               {{ user?.firstname }} {{ user?.lastname }}
             </h2>
             <p class="tw-text-sm tw-text-gray-600">{{ user?.email }}</p>
-            <p class="tw-text-sm tw-text-gray-600">
-              {{ user?.username }} - {{ user?.staff ? 'staff' : 'clent' }}
-            </p>
 
             <div class="tw-mt-2">
-              <span
-                class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full"
-                :class="
-                  user?.active
-                    ? 'tw-bg-green-100 tw-text-green-600'
-                    : 'tw-bg-red-100 tw-text-red-600'
-                "
+              <div
+                class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full tw-text-slate-700"
               >
-                {{ user?.active ? 'Active' : 'Inactive' }}
-              </span>
+                {{ date.formatDate(me?.createdAt, 'MMM DD, YYYY') }}
+              </div>
               <span
                 class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full"
                 :class="
@@ -352,7 +336,7 @@ onMounted(() => {
           <!-- Actions -->
           <div class="tw-p-4 tw-flex tw-justify-between" v-if="me?.admin">
             <div>
-              <div v-if="user.staff">
+              <div v-if="user.admin">
                 <q-btn
                   class="tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-blue-600 focus:tw-outline-none"
                   v-if="user.admin"
@@ -371,7 +355,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <q-btn
+            <!-- <q-btn
               class="tw-bg-red-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-red-600 focus:tw-outline-none"
               v-if="user.active"
               @click="deactivateUser($event, user.id)"
@@ -385,7 +369,7 @@ onMounted(() => {
               @click="activateUser($event, user.id)"
             >
               Activate
-            </q-btn>
+            </q-btn> -->
           </div>
         </div>
       </div>
