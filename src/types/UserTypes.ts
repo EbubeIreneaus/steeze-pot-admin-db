@@ -6,5 +6,8 @@ export type Person = {
   profile_pics: string | null,
   createdAt: Date | string,
   admin: boolean,
-  phone: string
+  phone: string,
+  _count: {
+    order: number
+  }
 }

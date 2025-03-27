@@ -19,7 +19,7 @@ const totalSale = computed(() => {
       today.getMonth() == sold_date.getMonth()
     );
   });
-  
+
   const amount = filteredSales.reduce(
     (x, y) => x + parseInt(y.amount?.toString() || '0'),
     0
@@ -32,7 +32,7 @@ const totalSale = computed(() => {
   <q-card class="card q-pa-sm relative-position" flat>
     <img src="src/assets/images/triangle-light.png" />
     <q-card-section>
-      <span class="text-h6 text-title">Congratulation Ireanus</span>
+      <span class="text-h6 text-title">Congratulation  Mildred</span>
       <span class="text-subtitle block q-mb-md text-capitalize"
         >Best seller of the Mnnth
       </span>

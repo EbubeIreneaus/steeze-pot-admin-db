@@ -259,12 +259,14 @@ onMounted(() => {
           <!-- User Info -->
           <div class="tw-p-4 tw-text-center">
             <h2
-              class="tw-text-lg tw-font-semibold tw-text-gray-800 tw-capitalize"
+              class="tw-text-lg tw-font-semibold tw-capitalize tw-underline tw-underline-offset-2 tw-text-purple-700"
             >
               {{ me?.firstname }} {{ me?.lastname }}
             </h2>
             <p class="tw-text-sm tw-text-gray-600">{{ me?.email }}</p>
-
+            <p class="tw-text-sm tw-text-gray-600">
+              <strong>{{ me?._count.order }}</strong> ORDER'S
+            </p>
             <div class="tw-mt-2">
               <div
                 class="tw-text-xs tw-uppercase tw-font-bold tw-px-2 tw-py-1 tw-rounded-full tw-text-slate-700"
@@ -307,11 +309,13 @@ onMounted(() => {
 
           <!-- User Info -->
           <div class="tw-p-4 tw-text-center">
-            <h2
-              class="tw-text-lg tw-font-semibold tw-text-gray-800 tw-capitalize"
-            >
-              {{ user?.firstname }} {{ user?.lastname }}
-            </h2>
+            <router-link :to="`/user/${user?.id}`">
+              <h2
+                class="tw-text-lg tw-font-semibold tw-capitalize tw-underline tw-underline-offset-2 tw-text-purple-700"
+              >
+                {{ user?.firstname }} {{ user?.lastname }}
+              </h2>
+            </router-link>
             <p class="tw-text-sm tw-text-gray-600">{{ user?.email }}</p>
 
             <div class="tw-mt-2">
